@@ -36,7 +36,7 @@ CC= $(DEFAULT_CC)
 # to slow down the C part by not omitting it. Debugging, tracebacks and
 # unwinding are not affected -- the assembler part has frame unwind
 # information and GCC emits it where needed (x64) or with -g (see CCDEBUG).
-CCOPT= -O2 -fomit-frame-pointer
+CCOPT= -O1 -fno-omit-frame-pointer
 # Use this if you want to generate a smaller binary (but it's slower):
 #CCOPT= -Os -fomit-frame-pointer
 # Note: it's no longer recommended to use -O3 with GCC 4.x.
@@ -57,9 +57,9 @@ CCOPT_ppc=
 CCOPT_ppcspe=
 CCOPT_mips=
 #
-CCDEBUG=
+#CCDEBUG=
 # Uncomment the next line to generate debug information:
-#CCDEBUG= -g
+CCDEBUG= -g
 #
 CCWARN= -Wall
 # Uncomment the next line to enable more warnings:
@@ -190,6 +190,8 @@ endif
 #   make HOST_CC="gcc -m32" CROSS=i586-mingw32msvc- TARGET_SYS=Windows
 #   make HOST_CC="gcc -m32" CROSS=powerpc-linux-gnu-
 
+CFLAGS+=-fsanitize=address
+LDFLAGS+=-fsanitize=address
 CCOPTIONS= $(CCDEBUG) $(CCOPT) $(CCWARN) $(XCFLAGS) $(CFLAGS)
 LDOPTIONS= $(CCDEBUG) $(LDFLAGS)
 
